@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node{
+    int val;
+    struct Node* next;
+};
+struct Node* createNode(){
+    return (struct Node*)malloc(sizeof(struct Node));
+}
+void enqueue(struct Node** head ,int val){
+    if(*head == NULL){
+        struct Node * temp = createNode();
+        temp->val = val;
+        *head = temp;
+    }
+    else if ((*head)->val < val){
+        struct Node * temp = createNode();
+        temp->val = val;
+        temp->next=*head;
+        *head = temp;
+    }
+    else{
+        struct Node* ptr = *head;
+        while(ptr->next!=NULL && ptr->next->val > val){
+            ptr = ptr->next;
+        }
+        struct Node * temp = createNode();
+        temp->val = val;
+        temp->next=ptr->next;
+        ptr->next=temp;
+        
+    }
+     
+}
+void dequeue(struct Node**head){
+    struct Node* temp = *head;
+    *head=(*head)->next;
+    free(temp);
+}
+void display(struct Node* head){
+    if(head==NULL){
+        printf("Queue is empty\n");
+        return;
+    }
+    while(head!=NULL){
+        printf("%d ",head->val);
+        head=head->next;
+    }
+    printf("\n");
+}
+int main() {
+    struct Node * head = NULL;
+    display(head);
+    enqueue(&head,2);
+    display(head);
+    enqueue(&head,16);
+    display(head);
+    enqueue(&head,36);
+    display(head);
+    dequeue(&head);
+    display(head);
+    enqueue(&head,5);
+    display(head);
+    enqueue(&head,1);
+    display(head);
+    enqueue(&head,0);
+    display(head);
+    enqueue(&head,10);
+    display(head);
+    enqueue(&head,110);
+    display(head);
+    dequeue(&head);
+    display(head);
+    
+    
+
+    return 0;
+}
