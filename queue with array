@@ -1,14 +1,14 @@
 #include <stdio.h>
-#define max 5
+#define max 3
 void enqueue(int queue[],int *front , int *rear , int item){
-    if((*rear == max && *front == 1) || (*front == *rear +1)){
+    if((*rear == max-1 && *front == 0) || (*front == (*rear) +1)){
         printf("OVERFLOW!! \n");
         return;
     } 
     if(*front == -1 && *rear == -1){
         *rear = *front = 0;
     }
-    else if(*rear == max){
+    else if(*rear == max-1){
         *rear = 0;
     }
     else *rear +=1;
@@ -23,35 +23,45 @@ int dequeue(int queue[] , int *front , int *rear ){
     if (*front == *rear){
         *front = *rear = -1;
     }
-    else if ( *front == max ){
+    else if ( *front == max-1){
         *front = 0;
     }
-    else *front = *front + 1;
+    else *front = (*front) + 1;
     return value;
 }
 void display(int a[],int front ,int rear){
-    for(int i=front; i<=rear; i++){
-        printf("%d ",a[i]);
+    if(front<rear){
+        for(int i=front; i<=rear; i++){
+            printf("%d ",a[i]);
+        }
+        printf("\n");
+    }else{
+        for(int i=front; i<max; i++){
+            printf("%d ",a[i]);
+        }
+        for(int i=0; i<=rear; i++){
+            printf("%d ",a[i]);
+        }
+        printf("\n");
     }
-    printf("\n");
 }
 int main() {
     int queue [max];
     int front = -1 , rear = -1;
-    enqueue(queue,&front,&rear,14);
-    enqueue(queue,&front,&rear,12);
-    enqueue(queue,&front,&rear,10);
-    enqueue(queue,&front,&rear,5);
-    display(queue , front ,rear);
-    dequeue(queue,&front,&rear);
-    dequeue(queue,&front,&rear);
-    display(queue ,front, rear);
-    enqueue(queue,&front,&rear,12);
-    display(queue ,front, rear);
-    enqueue(queue,&front,&rear,50);
-    printf("\n%d front , %d rear\n",front , rear);
-    display(queue , front ,rear);
-    
-
+     while(1){
+        printf("1.ADD\n2.Delete\n3.Display\n4.Exit\n");
+        int choice;
+        scanf("%d",&choice);
+        if(choice==1){
+            int item;
+            printf("Enter the item : ");
+            scanf("%d",&item);
+            enqueue(queue,&front,&rear,item);
+        }
+        else if(choice==2) dequeue(queue,&front,&rear);
+        else if(choice==3) display(queue , front ,rear);
+        else if(choice==4) return 0;
+        else printf("Wrong input\n");
+    }
     return 0;
 }
