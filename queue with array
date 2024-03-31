@@ -1,5 +1,5 @@
 #include <stdio.h>
-#define max 3
+#define max 5
 void enqueue(int queue[],int *front , int *rear , int item){
     if((*rear == max-1 && *front == 0) || (*front == (*rear) +1)){
         printf("OVERFLOW!! \n");
