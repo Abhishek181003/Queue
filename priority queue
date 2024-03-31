@@ -37,6 +37,7 @@ void dequeue(struct Node**head){
     struct Node* temp = *head;
     *head=(*head)->next;
     free(temp);
+    printf("Item Deleted Sucessfully!\n");
 }
 void display(struct Node* head){
     if(head==NULL){
@@ -50,28 +51,22 @@ void display(struct Node* head){
     printf("\n");
 }
 int main() {
-    struct Node * head = NULL;
-    display(head);
-    enqueue(&head,2);
-    display(head);
-    enqueue(&head,16);
-    display(head);
-    enqueue(&head,36);
-    display(head);
-    dequeue(&head);
-    display(head);
-    enqueue(&head,5);
-    display(head);
-    enqueue(&head,1);
-    display(head);
-    enqueue(&head,0);
-    display(head);
-    enqueue(&head,10);
-    display(head);
-    enqueue(&head,110);
-    display(head);
-    dequeue(&head);
-    display(head);
+  struct Node * head = NULL;
+    while(1){
+        printf("1.ADD\n2.Delete\n3.Display\n4.Exit\n");
+        int choice;
+        scanf("%d",&choice);
+        if(choice==1){
+            int item,priority;
+            printf("Enter the item : ");
+            scanf("%d",&item);
+            enqueue(&head,item);
+        }
+        else if(choice==2) dequeue(&head);
+        else if(choice==3)display(head);
+        else if(choice==4)return 0;
+        else printf("Wrong input\n");
+    }
     
     
 
