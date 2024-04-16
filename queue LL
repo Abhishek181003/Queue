@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    if (!newNode) {
+        printf("Memory allocation failed\n");
+        exit(1);
+    }
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+void enqueue(struct Node **front , struct Node **rear, int data) {
+    if(*front==NULL){
+        struct Node *newNode = createNode(data);
+        newNode->next=NULL;
+        *front=*rear=newNode;
+        return;
+    }
+    struct Node* newNode = createNode(data);
+    (*rear)->next=newNode;
+    (*rear)=newNode;
+}
+
+int dequeue(struct Node **front , struct Node **rear) {
+    if (*front==NULL) {
+        printf("Queue is empty\n");
+        return 0;
+    }
+    struct Node* temp = *front;
+    int data = temp->data;
+    *front = (*front)->next;
+    free(temp);
+    return data;
+}
+
+void display(struct Node *front) {
+    if (front==NULL) {
+        printf("Queue is empty\n");
+        return;
+    }
+    struct Node* temp = front;
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    struct Node * front , *rear = NULL;
+    enqueue(&front,&rear, 10);
+    enqueue(&front,&rear, 20);
+    enqueue(&front,&rear, 30);
+    enqueue(&front,&rear, 40);
+    printf("Queue after Enqueue operations: ");
+    display(front);
+    printf("Dequeued element: %d\n", dequeue(&front,&rear));
+    printf("Queue after Dequeue operation: ");
+    display(front);
+
+    return 0;
+}
